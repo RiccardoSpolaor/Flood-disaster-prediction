@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
 from io import StringIO
-
-from numpy import ndarray
 from pgmpy.factors.discrete.CPD import TabularCPD
 from typing import Dict, List, Optional
 
@@ -22,9 +20,10 @@ def cpd_to_pandas(pcd: TabularCPD):
     # String representing the pretty print format of the PCD table
     tabulate_string = str(pcd)
 
+    # Set the header according to the number of parents of the variable
     header: Optional[List[int]] = None if len(pcd.state_names) == 1 else np.arange(0, len(pcd.state_names) - 1).tolist()
 
-    # Pandas dataframe creation
+    # Create the Pandas Dataframe
     data = (pd.read_csv(StringIO(tabulate_string),
                         sep=r'\|',
                         comment='+',
@@ -33,9 +32,11 @@ def cpd_to_pandas(pcd: TabularCPD):
                         header=header).dropna(how='all', axis=1)
             )
 
+    # Remove the column name if the variable has no parents
     if header is None:
         data.columns = [data.columns[0], '']
-    # The first column is turned into the index of the Dataframe
+
+    # Turn the first column into the index of the Dataframe
     data.set_index(data.columns[0], inplace=True, drop=True)
     data.index.name = None
 
