@@ -16,12 +16,25 @@ def get_state_names(variable: str, state_names_dictionary: Dict[str, List[str]],
     return dict((v, state_names_dictionary[v]) for v in variable_and_evidence_list if v in state_names_dictionary)
 
 
-def cpd_to_pandas(pcd: TabularCPD):
+def get_evidence_card(variable: str, state_names_dictionary: Dict[str, List[str]],
+                      evidence_dictionary: Dict[str, List[str]]):
+    evidence: Optional[List[str]] = evidence_dictionary[variable]
+    if evidence is None:
+        return None
+    else:
+        return [len(state_names_dictionary[e]) for e in evidence]
+
+
+def cpd_to_pandas(tabular_cpd: TabularCPD):
     # String representing the pretty print format of the PCD table
-    tabulate_string = str(pcd)
+    tabulate_string = str(tabular_cpd)
 
     # Set the header according to the number of parents of the variable
-    header: Optional[List[int]] = None if len(pcd.state_names) == 1 else np.arange(0, len(pcd.state_names) - 1).tolist()
+    header: Optional[List[int]]
+    if len(tabular_cpd.state_names) == 1:
+        header = None
+    else:
+        header = [i for i in range(0, len(tabular_cpd.state_names) - 1)]
 
     # Create the Pandas Dataframe
     data = (pd.read_csv(StringIO(tabulate_string),
@@ -41,12 +54,3 @@ def cpd_to_pandas(pcd: TabularCPD):
     data.index.name = None
 
     return data
-
-
-def get_evidence_card(variable: str, state_names_dictionary: Dict[str, List[str]],
-                      evidence_dictionary: Dict[str, List[str]]):
-    evidence: Optional[List[str]] = evidence_dictionary[variable]
-    if evidence is None:
-        return None
-    else:
-        return [len(state_names_dictionary[e]) for e in evidence]
