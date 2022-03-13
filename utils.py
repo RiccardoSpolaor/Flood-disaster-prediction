@@ -1,13 +1,11 @@
-import numpy as np
 import pandas as pd
 from io import StringIO
 from pgmpy.factors.discrete.CPD import TabularCPD
 from typing import Dict, List, Optional
 
 
-def get_state_names(variable: str, state_names_dictionary: Dict[str, List[str]],
-                    evidence_dictionary: Dict[str, List[str]]):
-    evidence: Optional[List[str]] = evidence_dictionary[variable]
+def __get_state_names(variable: str, state_names_dictionary: Dict[str, List[str]],
+                      evidence: Optional[List[str]]) -> Dict[str, List[str]]:
     if evidence is None:
         variable_and_evidence_list = [variable]
     else:
@@ -16,13 +14,27 @@ def get_state_names(variable: str, state_names_dictionary: Dict[str, List[str]],
     return dict((v, state_names_dictionary[v]) for v in variable_and_evidence_list if v in state_names_dictionary)
 
 
-def get_evidence_card(variable: str, state_names_dictionary: Dict[str, List[str]],
-                      evidence_dictionary: Dict[str, List[str]]):
-    evidence: Optional[List[str]] = evidence_dictionary[variable]
+def __get_evidence_card(state_names_dictionary: Dict[str, List[str]],
+                        evidence: Optional[List[str]]) -> Optional[List[int]]:
     if evidence is None:
         return None
     else:
         return [len(state_names_dictionary[e]) for e in evidence]
+
+
+def get_tabular_cpd(variable: str, state_names_dictionary: Dict[str, List[str]],
+                    values_dictionary: Dict[str, List[List[float]]],
+                    evidence_dictionary: Dict[str, List[str]]) -> TabularCPD:
+    evidence: Optional[List[str]] = evidence_dictionary[variable]
+
+    return TabularCPD(
+        variable=variable,
+        variable_card=len(state_names_dictionary[variable]),
+        values=values_dictionary[variable],
+        evidence=evidence,
+        evidence_card=__get_evidence_card(state_names_dictionary, evidence),
+        state_names=__get_state_names(variable, state_names_dictionary, evidence)
+    )
 
 
 def cpd_to_pandas(tabular_cpd: TabularCPD):
