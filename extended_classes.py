@@ -183,6 +183,7 @@ class ExtendedApproxInference(ApproxInference):
             joint=True,
             show_progress=True,
             use_weighted_sampling=False,
+            seed=None
     ):
         """
         Method for doing approximate inference based on sampling in Bayesian
@@ -207,8 +208,11 @@ class ExtendedApproxInference(ApproxInference):
         show_progress: boolean (default: True)
             If True, shows a progress bar when generating samples.
 
-        sampling_type: str (default: 'weighted')
-            The type of sampling to perform: ['weighted', 'negation'].
+        use_weighted_sampling: bool (default: False)
+            If True, it samples with Weighted Likelihood. If False, it samples with Negation Sampling.
+
+        seed: int (default: None)
+            If a value is provided, sets the seed for numpy.random.
 
         Returns
         -------
@@ -236,6 +240,7 @@ class ExtendedApproxInference(ApproxInference):
                 evidence=evidence,
                 virtual_evidence=virtual_evidence,
                 show_progress=show_progress,
+                seed=seed
             )
         else:
             samples = self.model.simulate_by_weighted_likelihood(
@@ -243,6 +248,7 @@ class ExtendedApproxInference(ApproxInference):
                 evidence=evidence,
                 virtual_evidence=virtual_evidence,
                 show_progress=show_progress,
+                seed=seed,
             )
 
 
