@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from io import StringIO
 from pgmpy.factors.discrete.CPD import TabularCPD
@@ -37,32 +38,43 @@ def get_tabular_cpd(variable: str, state_names_dictionary: Dict[str, List[str]],
     )
 
 
-def cpd_to_pandas(tabular_cpd: TabularCPD):
-    # String representing the pretty print format of the PCD table
-    tabulate_string = str(tabular_cpd)
+def cpd_to_pandas(cpd: TabularCPD) -> pd.DataFrame:
+    variable = cpd.variable
 
-    # Set the header according to the number of parents of the variable
-    header: Optional[List[int]]
-    if len(tabular_cpd.state_names) == 1:
-        header = None
+    evidence = cpd.get_evidence()
+    evidence.reverse()
+
+    state_names = cpd.state_names
+
+    if len(evidence) == 0:
+        columns = [['']]
     else:
-        header = [i for i in range(0, len(tabular_cpd.state_names) - 1)]
+        columns = pd.MultiIndex.from_product(
+            [['{} ({})'.format(e, n) for n in state_names[e]] for e in evidence]
+        )
 
-    # Create the Pandas Dataframe
-    data = (pd.read_csv(StringIO(tabulate_string),
-                        sep=r'\|',
-                        comment='+',
-                        engine='python',
-                        skipinitialspace=True,
-                        header=header).dropna(how='all', axis=1)
-            )
+    values = cpd.values
 
-    # Remove the column name if the variable has no parents
-    if header is None:
-        data.columns = [data.columns[0], '']
+    if values.ndim > 1:
+        values = values.reshape(
+            values.shape[0], (np.prod(np.array([i for i in values.shape[1:]])))
+        )
 
-    # Turn the first column into the index of the Dataframe
-    data.set_index(data.columns[0], inplace=True, drop=True)
-    data.index.name = None
+    return pd.DataFrame(
+        values,
+        index=['{} ({})'.format(variable, n) for n in state_names[variable]],
+        columns=columns
+    )
 
-    return data
+
+def apply_discrete_values(variable: str, df: pd.DataFrame, quantiles: List[float],
+                          state_names_dictionary: Dict[str, List[str]]) -> None:
+    state_names = state_names_dictionary[variable]
+    state_names = state_names.copy()
+    state_names.reverse()
+
+    df[variable] = pd.cut(x=df[variable],
+                          bins=quantiles,
+                          labels=state_names,
+                          include_lowest=True
+                          )
