@@ -1,4 +1,4 @@
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Set, Union
 
 from matplotlib.lines import Line2D
 
@@ -15,12 +15,15 @@ __node_positions = {
     FLOOD: (22, 0)
 }
 
-__GREEN = 'green'
+__GREEN = '#9BBB59'
 __WHITE = 'white'
-__RED = 'RED'
+__RED = 'red'
+__BLUE = '#cccce6'
+__YELLOW = '#ffffcc'
 
 
-def __plot_bayesian_network(model: BayesianModel, title: str, color_map: List[str] = None, legend: Optional[Dict] = None):
+def __plot_bayesian_network(model: BayesianModel, title: str, color_map: List[str] = None,
+                            legend: Optional[Dict] = None):
     plt.figure(figsize=(10, 6))
 
     node_names = {n: '\n'.join(n.split(' ')) for n in model.nodes()}
@@ -52,7 +55,7 @@ def display_markov_blanket(model: BayesianModel, variable, markov_blanket):
     legend = {
         'handles': [
             Line2D([0], [0], marker='o', color='black', label='Circle', markerfacecolor=__GREEN, markersize=15),
-            Line2D([0], [0], marker='o', color='black', label='Circle', markerfacecolor=__RED, markersize=15)
+            Line2D([0], [0], marker='o', color='black', label='Circle', markerfacecolor=__YELLOW, markersize=15)
         ],
         'labels': ['Selected variable', 'Markov blanket node']
 
@@ -61,8 +64,36 @@ def display_markov_blanket(model: BayesianModel, variable, markov_blanket):
         if node == variable:
             color_map.append(__GREEN)
         elif node in markov_blanket:
-            color_map.append(__RED)
+            color_map.append(__YELLOW)
         else:
             color_map.append(__WHITE)
 
     __plot_bayesian_network(model, "Markov Blanket for variable: {}".format(variable), color_map, legend)
+
+
+def display_v_structure(model: BayesianModel, variable: str, evidence: Union[str, List[str]],
+                        active_trail: Dict[str, Set[str]]) -> None:
+    if type(evidence) == str:
+        evidence = [evidence]
+    active_trail_variables = active_trail[variable]
+    color_map = []
+    legend = {
+        'handles': [
+            Line2D([0], [0], marker='o', color='black', label='Circle', markerfacecolor=__GREEN, markersize=15),
+            Line2D([0], [0], marker='o', color='black', label='Circle', markerfacecolor=__YELLOW, markersize=15),
+            Line2D([0], [0], marker='o', color='black', label='Circle', markerfacecolor=__BLUE, markersize=15)
+        ],
+        'labels': ['Selected variable', 'Evidence', 'Activated node']
+
+    }
+    for node in model.nodes:
+        if node == variable:
+            color_map.append(__GREEN)
+        elif node in evidence:
+            color_map.append(__YELLOW)
+        elif node in active_trail_variables:
+            color_map.append(__BLUE)
+        else:
+            color_map.append(__WHITE)
+
+    __plot_bayesian_network(model, f'Trail of influence for variable {variable}', color_map, legend)
