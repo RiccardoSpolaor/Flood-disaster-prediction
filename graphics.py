@@ -17,7 +17,6 @@ __node_positions = {
 
 __GREEN = '#9BBB59'
 __WHITE = 'white'
-__RED = 'red'
 __BLUE = '#cccce6'
 __YELLOW = '#ffffcc'
 
