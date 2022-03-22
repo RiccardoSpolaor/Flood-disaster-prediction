@@ -49,7 +49,7 @@ def display_bayesian_network(model: BayesianModel):
     __plot_bayesian_network(model, "Flood Risk Bayesian Network")
 
 
-def display_markov_blanket(model: BayesianModel, variable, markov_blanket):
+def display_markov_blanket(model: BayesianModel, variable: str, markov_blanket: List[str]):
     color_map = []
     legend = {
         'handles': [
