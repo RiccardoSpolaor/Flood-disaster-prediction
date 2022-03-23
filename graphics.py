@@ -1,10 +1,10 @@
-from typing import List, Optional, Dict, Set, Union
+from typing import List, Optional, Dict, Set, Union, Any
 
 from matplotlib.lines import Line2D
 
 from variables import *
 
-from pgmpy.models import BayesianModel
+from pgmpy.models import BayesianNetwork
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -21,8 +21,25 @@ __BLUE = '#cccce6'
 __YELLOW = '#ffffcc'
 
 
-def __plot_bayesian_network(model: BayesianModel, title: str, color_map: List[str] = None,
-                            legend: Optional[Dict] = None):
+def __plot_bayesian_network(model: BayesianNetwork, title: str, color_map: List[str] = None,
+                            legend: Optional[Dict[str, Any]] = None) -> None:
+    """Plot a Bayesian Network.
+
+    Parameters
+    ----------
+    model : BayesianNetwork
+        Bayesian Network to plot.
+    title : str
+        Title of the plot.
+    color_map : List[str] (default = None)
+        Optional list of colors to assign to the respective nodes of the Network.
+    color_map : List[str] (default = None)
+        Optional list of colors to assign to the respective nodes of the Network. If None, the nodes are all filled with
+        the color 'white'.
+    legend : Optional[Dict[str, Any]] (default = None)
+        Optional dictionary containing information to plot the legend. If None, the legend is not plotted.
+    """
+
     plt.figure(figsize=(10, 6))
 
     node_names = {n: '\n'.join(n.split(' ')) for n in model.nodes()}
@@ -45,11 +62,31 @@ def __plot_bayesian_network(model: BayesianModel, title: str, color_map: List[st
     plt.show()
 
 
-def display_bayesian_network(model: BayesianModel):
+def plot_simple_bayesian_network(model: BayesianNetwork) -> None:
+    """Plot a Bayesian Network without highlighted nodes or legends.
+
+        Parameters
+        ----------
+        model : BayesianNetwork
+            Bayesian Network to plot.
+    """
+
     __plot_bayesian_network(model, "Flood Risk Bayesian Network")
 
 
-def display_markov_blanket(model: BayesianModel, variable: str, markov_blanket: List[str]):
+def plot_markov_blanket(model: BayesianNetwork, variable: str, markov_blanket: List[str]) -> None:
+    """Plot a Bayesian Network showing information about the Markov Blanket of a given node.
+
+        Parameters
+        ----------
+        model : BayesianNetwork
+            Bayesian Network to plot.
+        variable : str
+            Node for which the Markov Blanket is shown.
+        markov_blanket : List[str]
+            Markov Blanket of `variable`.
+    """
+
     color_map = []
     legend = {
         'handles': [
@@ -70,8 +107,22 @@ def display_markov_blanket(model: BayesianModel, variable: str, markov_blanket: 
     __plot_bayesian_network(model, "Markov Blanket for variable: {}".format(variable), color_map, legend)
 
 
-def display_v_structure(model: BayesianModel, variable: str, evidence: Union[str, List[str]],
-                        active_trail: Dict[str, Set[str]]) -> None:
+def plot_v_structure(model: BayesianNetwork, variable: str, evidence: Union[str, List[str]],
+                     active_trail: Dict[str, Set[str]]) -> None:
+    """Plot a Bayesian Network showing an active v-structure given a variable and a certain evidence.
+
+        Parameters
+        ----------
+        model : BayesianNetwork
+            Bayesian Network to plot.
+        variable : str
+            Given node.
+        evidence : Union[str, List[str]]
+            Evidence of `variable` that activates the v-structure.
+        active_trail : Dict[str, Set[str]]
+            Active trail of the v-structure.
+    """
+
     if type(evidence) == str:
         evidence = [evidence]
     active_trail_variables = active_trail[variable]

@@ -6,6 +6,8 @@ import numpy as np
 
 
 class ExtendedBayesianNetwork(BayesianNetwork):
+    """Extended class for Bayesian Models, which allows to simulate data from the model with Weighted Likelihood."""
+
     def simulate_by_weighted_likelihood(
         self,
         n_samples=10,
@@ -174,6 +176,11 @@ class ExtendedBayesianNetwork(BayesianNetwork):
 
 
 class ExtendedApproxInference(ApproxInference):
+    """Class that extends ApproxInference.
+    Allows to set a seed in order to have deterministic results for the sampling.
+    Allows to sample by Weighted Likelihood on the model.
+    """
+
     def query(
             self,
             variables,
