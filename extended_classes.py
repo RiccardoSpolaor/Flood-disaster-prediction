@@ -216,7 +216,7 @@ class ExtendedApproxInference(ApproxInference):
             If True, shows a progress bar when generating samples.
 
         use_weighted_sampling: bool (default: False)
-            If True, it samples with Weighted Likelihood. If False, it samples with Negation Sampling.
+            If True, it samples with Weighted Likelihood. If False, it samples with Rejection Sampling.
 
         seed: int (default: None)
             If a value is provided, sets the seed for numpy.random.

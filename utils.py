@@ -178,14 +178,14 @@ def print_approximate_inference(variable: str, infer: ExtendedApproxInference, n
     variable : str
         Variable of the Bayesian Network for which the approximate inference on its discrete states is computed.
     infer : ExtendedApproxInference
-        Object to apply approximate inference on `variable` with the Negation Sampling or Weighted Likelihood methods.
+        Object to apply approximate inference on `variable` with the Rejection Sampling or Weighted Likelihood methods.
     n_samples : int (default: 1_000)
         Number of samples to use to compute the approximate inference.
     evidence : Optional[Dict[str, List[str]]] (default: None)
         Dictionary which keys are evidence of `variable` in the Bayesian Network and which values are their selected
         state.
     use_weighted_likelihood : bool (default: False)
-        If true, sample by Weighted Likelihood. If false, sample by Negation Sampling.
+        If true, sample by Weighted Likelihood. If false, sample by Rejection Sampling.
     random_state : int (default: None)
         Set a seed for deterministic results on the sampling.
     """
@@ -193,7 +193,7 @@ def print_approximate_inference(variable: str, infer: ExtendedApproxInference, n
     start_time = time.time_ns()
 
     evidence_str = '' if evidence is None else f" | {', '.join([f'{k} = {v}' for k, v in evidence.items()])}"
-    use_weighted_likelihood_str = 'negation sampling' if not use_weighted_likelihood else 'weighted likelihood'
+    use_weighted_likelihood_str = 'rejection sampling' if not use_weighted_likelihood else 'weighted likelihood'
 
     print(f"Approximate Inference with {use_weighted_likelihood_str} to find P({variable}{evidence_str})\n")
     print(infer.query(variables=[variable], n_samples=n_samples, show_progress=False, seed=random_state,
