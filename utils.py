@@ -1,5 +1,3 @@
-import time
-
 import numpy as np
 import pandas as pd
 from pgmpy.factors.discrete.CPD import TabularCPD
@@ -158,14 +156,10 @@ def print_exact_inference(variable: str, infer: VariableElimination,
         Dictionary which keys are evidence of `variable` in the Bayesian Network and which values are their selected
         state.
     """
-
-    start_time = time.time_ns()
-
     evidence_str = '' if evidence is None else f" | {', '.join([f'{k} = {v}' for k, v in evidence.items()])}"
 
     print(f"Exact Inference to find P({variable}{evidence_str})\n")
     print(infer.query([variable], show_progress=False, evidence=evidence))
-    print(f"----- {(time.time_ns() - start_time) / 1_000_000_000} seconds -----")
 
 
 def print_approximate_inference(variable: str, infer: ExtendedApproxInference, n_samples=1_000,
@@ -189,16 +183,12 @@ def print_approximate_inference(variable: str, infer: ExtendedApproxInference, n
     random_state : int (default: None)
         Set a seed for deterministic results on the sampling.
     """
-
-    start_time = time.time_ns()
-
     evidence_str = '' if evidence is None else f" | {', '.join([f'{k} = {v}' for k, v in evidence.items()])}"
     use_weighted_likelihood_str = 'rejection sampling' if not use_weighted_likelihood else 'weighted likelihood'
 
     print(f"Approximate Inference with {use_weighted_likelihood_str} to find P({variable}{evidence_str})\n")
     print(infer.query(variables=[variable], n_samples=n_samples, show_progress=False, seed=random_state,
                       evidence=evidence, use_weighted_sampling=use_weighted_likelihood))
-    print(f"----- {(time.time_ns() - start_time) / 1_000_000_000} seconds -----")
 
 
 def apply_discrete_values(variable: str, df: pd.DataFrame, quantiles: List[float],
