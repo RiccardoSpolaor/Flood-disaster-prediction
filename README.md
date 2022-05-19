@@ -1,4 +1,4 @@
-# Flood Disaster Prediction
+# :earth_africa: Flood Disaster Prediction :ocean:
 Due to recent *climate change* related issues critical floods of urban areas have started becoming more
 and more common. Hence, a software able to estimate the likelihood of such an event could be a useful
 tool in order to prevent the most dramatic scenarios.
