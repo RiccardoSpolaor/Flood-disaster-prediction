@@ -42,3 +42,5 @@ Git is used for versioning.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+Social preview image licensed by [Flood Vectors by Vecteez](https://www.vecteezy.com/free-vector/flood)
