@@ -7,3 +7,39 @@ floods in various municipalities of the Italian region Veneto. The structure of 
 by the paper *Assessing urban flood disaster risk using Bayesian network model and GIS applications*
 [https://www.tandfonline.com/doi/full/10.1080/19475705.2019.1685010], although quite deeply modified for didactic reasons.
 The project was developed in *Python* using the `pgmpy` library.
+
+## Repository structure
+
+    .
+    ├── code
+    │   ├── data                       
+    |   |   ├── 05_Veneto_Allegato-statistico.xlsx    # Data regarding general statistics on the region Veneto
+    |   |   ├── Elab_Altimetrie_DEM.xlsx              # Data regarding the elevation of the italian municipalities
+    |   |   ├── Redditi_e_principali_variabili...     # Data regarding the Italian population economy
+    |   |   └── codiceISTAT_schedaLR14_2017.ods       # Data regarding general statistics on the territory of the region Veneto
+    |   ├── Flood Disaster Prediction.ipynb           # Notebook containing the execution of the project
+    |   ├── extended_classes.py                       # Script extending the classes BayesianNetwork and ApproxInference
+    |   ├── graphics.py                               # Scripts containing graphical utils functions
+    |   ├── utils.py                                  # Script containing utils functions
+    │   └── variables.py                              # Variable nodes of the Bayesian Network
+    ├── report
+    │   └── Flood disaster prediction.pdf             # Report about the project 
+    ├── .gitignore                             
+    ├── LICENSE
+    └── README.md
+
+## Versioning
+
+Git is used for versioning.
+
+## Group members
+
+|  Name     |  Surname  |     Email                              |    Username                                             |
+| :-------: | :-------: | :------------------------------------: | :-----------------------------------------------------: |
+| Antonio   | Politano  | `antonio.politano2@studio.unibo.it`    | [_S1082351_](https://github.com/S1082351)               |
+| Francesco | Pieroni   | `francesco.pieroni3@studio.unibo.it`   | [_HumidBore_](https://github.com/HumidBore)             |
+| Riccardo  | Spolaor   | `riccardo.spolaor@studio.unibo.it`     | [_RiccardoSpolaor_](https://github.com/RiccardoSpolaor) |
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
