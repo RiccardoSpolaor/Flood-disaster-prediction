@@ -4,8 +4,7 @@ and more common. Hence, a software able to estimate the likelihood of such an ev
 tool in order to prevent the most dramatic scenarios.
 For this reason we proposed the implementation of a *Bayesian Network* to model the likelihood of
 floods in various municipalities of the Italian region Veneto. The structure of the network was inspired
-by the paper *Assessing urban flood disaster risk using Bayesian network model and GIS applications*
-[https://www.tandfonline.com/doi/full/10.1080/19475705.2019.1685010], although quite deeply modified for didactic reasons.
+by the paper [_Assessing urban flood disaster risk using Bayesian network model and GIS applications_](https://www.tandfonline.com/doi/full/10.1080/19475705.2019.1685010), although quite deeply modified for didactic reasons.
 The project was developed in *Python* using the `pgmpy` library.
 
 ## Repository structure
