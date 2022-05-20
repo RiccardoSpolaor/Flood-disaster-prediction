@@ -12,14 +12,14 @@ The project was developed in *Python* using the `pgmpy` library.
     .
     ├── code
     │   ├── data                       
-    |   |   ├── 05_Veneto_Allegato-statistico.xlsx    # Data regarding general statistics on the region Veneto
-    |   |   ├── Elab_Altimetrie_DEM.xlsx              # Data regarding the elevation of the italian municipalities
-    |   |   ├── Redditi_e_principali_variabili...     # Data regarding the Italian population economy
-    |   |   └── codiceISTAT_schedaLR14_2017.ods       # Data regarding general statistics on the territory of the region Veneto
-    |   ├── Flood Disaster Prediction.ipynb           # Notebook containing the execution of the project
-    |   ├── extended_classes.py                       # Script extending the classes BayesianNetwork and ApproxInference
-    |   ├── graphics.py                               # Scripts containing graphical utils functions
-    |   ├── utils.py                                  # Script containing utils functions
+    │   │   ├── 05_Veneto_Allegato-statistico.xlsx    # Data regarding general statistics on the region Veneto
+    │   │   ├── Elab_Altimetrie_DEM.xlsx              # Data regarding the elevation of the italian municipalities
+    │   │   ├── Redditi_e_principali_variabili...     # Data regarding the Italian population economy
+    │   │   └── codiceISTAT_schedaLR14_2017.ods       # Data regarding general statistics on the territory of the region Veneto
+    │   ├── Flood Disaster Prediction.ipynb           # Notebook containing the execution of the project
+    │   ├── extended_classes.py                       # Script extending the classes BayesianNetwork and ApproxInference
+    │   ├── graphics.py                               # Scripts containing graphical utils functions
+    │   ├── utils.py                                  # Script containing utils functions
     │   └── variables.py                              # Variable nodes of the Bayesian Network
     ├── report
     │   └── Flood disaster prediction.pdf             # Report about the project 
