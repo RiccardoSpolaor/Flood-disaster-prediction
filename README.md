@@ -5,7 +5,9 @@ tool in order to prevent the most dramatic scenarios.
 For this reason we proposed the implementation of a *Bayesian Network* to model the likelihood of
 floods in various municipalities of the Italian region Veneto. The structure of the network was inspired
 by the paper [_Assessing urban flood disaster risk using Bayesian network model and GIS applications_](https://www.tandfonline.com/doi/full/10.1080/19475705.2019.1685010), although quite deeply modified for didactic reasons.
-The project was developed in *Python* using the `pgmpy` library.
+The project was developed in *Python* using the `pgmpy` library as an assignment for the third module of the 
+[_Fundamentals of Artificial Intelligence and Knowledge Representation_](https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2022/446566) course
+of the master degree in Artificial Intelligence of University of Bologna held by professor Paolo Torroni.
 
 ## Repository structure
 
